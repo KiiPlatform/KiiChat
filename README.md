@@ -24,6 +24,28 @@ So you need to set up the google account on your emulator.
 
 <img src="screenshots/05.png">
 
+##Kii Features used:
+
+- User management
+	- Sign Up
+	- Sign In
+	- Integrating Facebook Account
+- Group Management
+	- Creating Groups
+	- Adding Group Members
+	- Listing Groups
+- Data management
+	- Setting ACL to a Bucket
+	- Creating/Retrieving Objects
+	- Querying for Objects
+	- Uploading Object Bodies
+	- Downloading Object Bodies
+	- Receiving "Push to App" Notifications
+- Push Notifications
+	- "Push to User" Notifications
+	- "Push to App" Notifications
+- Analytics
+	- Event data analytics
 
 ##Support:
 If you have any questions, please feel free to ask at [community](http://community.kii.com/).
