@@ -26,7 +26,7 @@ So you need to set up the google account on your emulator.
 
 ##Kii Features used:
 
-- User management
+- User Management
 	- Sign Up
 	- Sign In
 	- Integrating Facebook Account
@@ -34,7 +34,7 @@ So you need to set up the google account on your emulator.
 	- Creating Groups
 	- Adding Group Members
 	- Listing Groups
-- Data management
+- Data Management
 	- Setting ACL to a Bucket
 	- Creating/Retrieving Objects
 	- Querying for Objects
