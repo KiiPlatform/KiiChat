@@ -5,7 +5,7 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 /**
- * SharedPreferencesを扱うためのヘルパークラスです。
+ * A helper class to handle SharedPreferences.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

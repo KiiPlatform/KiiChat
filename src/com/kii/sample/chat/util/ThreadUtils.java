@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 
 /**
- * Threadに関連した処理を行うユーティリティクラスです。
+ * A suite of utilities surrounding the use of the thread.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

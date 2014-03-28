@@ -23,7 +23,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 /**
- * GCMからのプッシュ通知を受信するレシーバーです。
+ * GCMPushReceiver listens for incoming GCM messages.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -32,7 +32,7 @@ public class GCMPushReceiver extends BroadcastReceiver {
 	public void onReceive(final Context context, Intent intent) {
 		Logger.i("received push message");
 		if (KiiUser.getCurrentUser() == null) {
-			// ログイン中でない場合は何もしない
+			// Do nothing if user isn't logged in.
 			return;
 		}
 		GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
@@ -48,7 +48,7 @@ public class GCMPushReceiver extends BroadcastReceiver {
 				case PUSH_TO_APP:
 					Logger.i("received PUSH_TO_APP");
 					try {
-						// 参加中のChatに新規メッセージが投稿された場合
+						// If a new message is posted to the your chat room.
 						Logger.i("received PUSH_TO_USER");
 						new Thread(new Runnable() {
 							@Override
@@ -58,7 +58,7 @@ public class GCMPushReceiver extends BroadcastReceiver {
 									obj.refresh();
 									ChatMessage chatMessage = new ChatMessage(obj);
 									KiiGroup kiiGroup = KiiGroup.createByUri(Uri.parse(chatMessage.getGroupUri()));
-									// 自分がメンバーでないChatRoomは無視する
+									// Ignores message if it's not addressed to logged in user.
 									if (isMember(kiiGroup)) {
 										sendBroadcast(context, ApplicationConst.ACTION_MESSAGE_RECEIVED, chatMessage.getKiiObject().toJSON().toString());
 									}
@@ -73,15 +73,16 @@ public class GCMPushReceiver extends BroadcastReceiver {
 					break;
 				case PUSH_TO_USER:
 					Logger.i("received PUSH_TO_USER");
-					// 他のユーザが自分とChatを開始した場合
-					// 対象のChat用バケットを購読してメッセージをプッシュ通知してもらう状態にする
+					// If someone starts a new chat with logged in user.
+					// Subscribes to chat bucket for the push message.
+					// When subscribe, it will be able to receive the push message if event happen in the bucket.
 					new Thread(new Runnable() {
 						@Override
 						public void run() {
 							try {
 								String groupUri =  extras.getString(ChatRoom.CAHT_GROUP_URI);
 								KiiGroup kiiGroup = KiiGroup.createByUri(Uri.parse(groupUri));
-								// 自分がメンバーでないChatRoomは無視する
+								// Ignores message if it's not addressed to logged in user.
 								if (isMember(kiiGroup)) {
 									KiiBucket chatBucket = ChatRoom.getBucket(kiiGroup);
 									KiiUser.getCurrentUser().pushSubscription().subscribeBucket(chatBucket);
@@ -97,7 +98,7 @@ public class GCMPushReceiver extends BroadcastReceiver {
 		}
 	}
 	/**
-	 * ログイン中のユーザが指定されたグループに所属しているか判定します。
+	 * Checks whether logged in user who belongs to the specified group.
 	 * 
 	 * @param kiiGroup
 	 * @return
@@ -116,7 +117,7 @@ public class GCMPushReceiver extends BroadcastReceiver {
 		return false;
 	}
 	/**
-	 * プッシュ通知を受信したことをBroadcast Intentを使ってActivityに通知します。
+	 * Propagates received message to Activity using the broadcast intent.
 	 * 
 	 * @param context
 	 * @param action

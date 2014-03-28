@@ -7,7 +7,7 @@ import com.kii.sample.chat.ApplicationConst;
 import com.kii.sample.chat.KiiChatApplication;
 
 /**
- * Google Cloud Messagingの処理を行うユーティリティクラスです。
+ * A suite of utilities surrounding the use of the GCM(Google Cloud Messaging)
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -23,7 +23,6 @@ public class GCMUtils {
 				registrationId = gcm.register(ApplicationConst.SENDER_ID);
 				break;
 			} catch (IOException ignore) {
-				// java.io.IOException: SERVICE_NOT_AVAILABLEがたまに発生するのでリトライする
 				Thread.sleep(1000);
 				retry++;
 				Logger.w("failed to register GCM. retry " + retry + " times  reason=" + ignore.getMessage());

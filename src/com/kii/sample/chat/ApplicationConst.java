@@ -1,20 +1,20 @@
 package com.kii.sample.chat;
 
 /**
- * KiiChatアプリケーション共通で使用する定数を管理します。
+ * Define application constant.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
 public final class ApplicationConst {
 	
-	// TODO:APP_IDとAPP_KEYはKiiCloudでアプリケーションを作成した際に発行された値に書き換えてください。
+	// TODO:Needs to overwrite APP_ID and APP_KEY. Refer to http://documentation.kii.com/en/starts/android/
 	public static final String APP_ID = "f39c2d34";
 	public static final String APP_KEY = "2e98ef0bb78a58da92f9ac0709dc99ed";
-	// TODO:SENDER_IDはGCMの設定を有効にした際に発行された値に書き換えてください。
+	// TODO:Needs to overwrite SENDER_ID. Refer to http://developer.android.com/google/gcm/gcm.html#senderid
 	public static final String SENDER_ID = "1012419078893";
-	// TODO:FACEBOOK_APP_IDはFacebookDevelopersでアプリケーションを作成した際に発行された値に書き換えてください。
+	// TODO:Needs to overwrite FACEBOOK_APP_ID. Refer to http://documentation.kii.com/en/guides/android/managing-users/social-network-integration/facebook-integration/
 	public static final String FACEBOOK_APP_ID = "699038683441923";
-	// TODO:AGGREGATION_RULE_IDはデベロッパーポータルでAggregation Ruleを作成した時に発行されたIDに書き換えてください。
+	// TODO:Needs to overwrite AGGREGATION_RULE_ID. Refer to http://documentation.kii.com/en/guides/android/managing-analytics/flex-analytics/analyze-event-data/
 	public static final String AGGREGATION_RULE_ID = "87";
 	
 	/**
@@ -28,15 +28,16 @@ public final class ApplicationConst {
 	 */
 	public static final String TOPIC_INVITE_NOTIFICATION = "invite_notify";
 	/**
-	 * チャットが開始されたことを表すアクションです。
+	 * 
+	 * Represents the action indicating that chat is started.
 	 */
 	public static final String ACTION_CHAT_STARTED = "com.kii.sample.chat.ACTION_CHAT_STARTED";
 	/**
-	 * メッセージを受信したことを表すアクションです。
+	 * Represents the action indicating that push message is received.
 	 */
 	public static final String ACTION_MESSAGE_RECEIVED = "com.kii.sample.chat.ACTION_MESSAGE_RECEIVED";
 	/**
-	 * BroadcastReceiverが受信したPush通知をActivityに送る時に使用するキーです。
+	 * The name of the extra data.
 	 */
 	public static final String EXTRA_MESSAGE = "com.kii.sample.chat.EXTRA_MESSAGE";
 	

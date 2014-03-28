@@ -20,13 +20,13 @@ import android.os.Build;
 import android.os.Environment;
 
 /**
- * スタンプの画像を管理するユーティリティクラスです。
+ * A suite of utilities surrounding the use of the image of stamp.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
 public class StampCacheUtils {
 	/**
-	 * 画像をスタンプ用に縮小して、キャッシュディレクトリに保存します。
+	 * Reduce an image, and store in the cache directory.
 	 * 
 	 * @param source
 	 * @param maxSize
@@ -36,7 +36,6 @@ public class StampCacheUtils {
 		InputStream is = KiiChatApplication.getContext().getContentResolver().openInputStream(source);
 		FileOutputStream os = null;
 		try {
-			// 一辺がmaxSizeに収まるように画像を縮小する
 			BitmapFactory.Options imageOptions = new BitmapFactory.Options();
 			imageOptions.inJustDecodeBounds = true;
 			BitmapFactory.decodeStream(is, null, imageOptions);
@@ -49,14 +48,13 @@ public class StampCacheUtils {
 			Bitmap bitmap = null;
 			if (imageScaleWidth > 2 && imageScaleHeight > 2) {
 				imageOptions = new BitmapFactory.Options();
-				imageOptions.inPreferredConfig = Config.ARGB_8888; // 透過PNGをサポート
+				imageOptions.inPreferredConfig = Config.ARGB_8888; // support transparent PNG.
 				int imageScale = (int)Math.floor((imageScaleWidth > imageScaleHeight ? imageScaleHeight : imageScaleWidth));
 				for (int i = 2; i < imageScale; i *= 2) {
 					imageOptions.inSampleSize = i;
 				}
 				bitmap = BitmapFactory.decodeStream(is, null, imageOptions);
 			} else {
-				// TODO:拡大する
 				bitmap = BitmapFactory.decodeStream(is);
 			}
 			File out = getCacheFile(escapeUri(source.toString()));
@@ -69,7 +67,7 @@ public class StampCacheUtils {
 		}
 	}
 	/**
-	 * キャッシュファイルを取得します。
+	 * Retrieve the image cache from file.
 	 * 
 	 * @param uri ChatStampのURI
 	 * @return
@@ -83,13 +81,12 @@ public class StampCacheUtils {
 		return new File(cacheDir + File.separator + escapeUri(uri));
 	}
 	/**
-	 * キャシュを永続化します。
+	 * Save the cache on background thread.
 	 * 
 	 * @param stamp
 	 * @param bitmap
 	 */
 	public static void saveCache(final ChatStamp stamp, final Bitmap bitmap) {
-		// 保存処理は時間がかかる可能性があるのでバックグラウンドで実行する
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -107,7 +104,7 @@ public class StampCacheUtils {
 		});
 	}
 	/**
-	 * URIからファイル名に使用できない文字をエスケープします。
+	 * To escape characters that can not be used in the file name from the URI.
 	 * 
 	 * @param uri
 	 * @return
