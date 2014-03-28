@@ -1,7 +1,7 @@
 package com.kii.sample.chat.model;
 
 /**
- * ChatUserとChatFriendを共通のAdapterで処理する為の、インターフェースです。
+ * Represents a user who is ChatUser or ChatFriend.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

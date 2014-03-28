@@ -11,7 +11,7 @@ import com.kii.sample.chat.R;
 import com.kii.sample.chat.model.IUser;
 
 /**
- * {@link IUser}をリストビューに表示するためのアダプターです。
+ * A adapter class to show the {@link IUser}.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

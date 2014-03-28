@@ -16,9 +16,9 @@ import com.kii.cloud.storage.query.KiiClause;
 import com.kii.cloud.storage.query.KiiQuery;
 
 /**
- * KiiChatを利用するユーザを表します。
- * アプリケーションスコープのデータとしてサインアップ時にKiiCloudに保存され、他のユーザから検索することが可能です。
- * 実世界のチャットアプリケーションでは全てのユーザを制限なく検索できるとプライバシー的に問題になるので、何かしらの制限を加える必要があります。
+ * Represents a user who use this application.
+ * This data is saved to KiiCloud as app scope data when user is signed up.
+ * This data allow you to search for user.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -27,16 +27,14 @@ public class ChatUser extends KiiObjectWrapper implements IUser {
 	private static final String BUCKET_NAME = "chat_users";
 	private static final String FIELD_USERNAME = "username";
 	private static final String FIELD_EMAIL = "email";
-	private static final String FIELD_URI = "uri";  // KiiUser.toUri()が返した値
+	private static final String FIELD_URI = "uri";
 	
 	public static KiiBucket getBucket() {
 		return Kii.bucket(BUCKET_NAME);
 	}
 	/**
-	 * 指定したキーワードでチャットユーザを検索します。
-	 * キーワードは前方一致で、ユーザ名とメールアドレスに対して検索を行います。
-	 * キーワードが'*'の場合、全てのユーザを返します。
-	 * 検索結果が存在しない場合は空のListを返します。
+	 * Prefix search for email and username by keyword.
+	 * You can use '*' as wildcard.
 	 * 
 	 * @param keyword
 	 * @return
@@ -62,8 +60,7 @@ public class ChatUser extends KiiObjectWrapper implements IUser {
 		return users;
 	}
 	/**
-	 * 指定したURIでチャットユーザを検索します。
-	 * チャットユーザが存在しない場合、nullを返します。
+	 * Finds a user by URI.
 	 * 
 	 * @param uri
 	 * @return
@@ -81,7 +78,7 @@ public class ChatUser extends KiiObjectWrapper implements IUser {
 		}
 	}
 	/**
-	 * 与えられたJSONObjectからユーザ名を取得します。
+	 * Retrieves a username from specified JSON.
 	 * 
 	 * @param json
 	 * @return
@@ -94,7 +91,7 @@ public class ChatUser extends KiiObjectWrapper implements IUser {
 		}
 	}
 	/**
-	 * 与えられたJSONObjectからメールアドレスを取得します。
+	 * Retrieves a email address from specified JSON.
 	 * 
 	 * @param json
 	 * @return
@@ -107,7 +104,7 @@ public class ChatUser extends KiiObjectWrapper implements IUser {
 		}
 	}
 	/**
-	 * 与えられたJSONObjectからURIを取得します。
+	 * Retrieves a URI from specified JSON.
 	 * 
 	 * @param json
 	 * @return

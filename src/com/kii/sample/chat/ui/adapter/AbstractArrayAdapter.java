@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * ArrayAdapterの骨格実装です。
+ *  Skeleton implementation of ArrayAdapter.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

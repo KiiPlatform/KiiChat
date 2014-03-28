@@ -6,7 +6,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 /**
- * Toastの表示処理を行うユーティリティクラスです。
+ * A suite of utilities surrounding the use of the Toast.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

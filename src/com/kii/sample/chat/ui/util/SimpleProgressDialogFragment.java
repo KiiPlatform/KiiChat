@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 	
 /**
- * 読み込み中のダイアログを表示するためのフラグメントです。
+ * A DialogFragment to show the progress dialog.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

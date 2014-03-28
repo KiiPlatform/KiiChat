@@ -10,9 +10,8 @@ import com.kii.cloud.storage.query.KiiQuery;
 import com.kii.sample.chat.util.Logger;
 
 /**
- * チャット友達を表します。
- * ユーザスコープのデータとして友達追加時にKiiCloudに保存され、他のユーザが他人の友達リストを参照することはできません。
- * 本アプリケーションではチャットを開始する前にユーザを友達に追加する必要があります。
+ * Represents a chat friend.
+ * This data is saved to KiiCloud as user scope data when adding a friend. 
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -21,13 +20,13 @@ public class ChatFriend extends KiiObjectWrapper implements IUser {
 	private static final String BUCKET_NAME = "chat_friends";
 	private static final String FIELD_NAME = "username";
 	private static final String FIELD_EMAIL = "email";
-	private static final String FIELD_URI = "uri";  // KiiUser.toUri()が返した値
+	private static final String FIELD_URI = "uri";
 	
 	public static KiiBucket getBucket() {
 		return KiiUser.getCurrentUser().bucket(BUCKET_NAME);
 	}
 	/**
-	 * ログイン中ユーザのチャット友達を全て取得します。
+	 * Gets list of all friends.
 	 * 
 	 * @return
 	 */

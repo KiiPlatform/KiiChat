@@ -11,7 +11,7 @@ import com.kii.cloud.storage.KiiGroup;
 import com.kii.sample.chat.R;
 
 /**
- * {@link KiiGroup}をリストビューに表示するためのアダプターです。
+ * A adapter class to show the {@link KiiGroup}.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
