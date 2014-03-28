@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	
+	<LinearLayout 
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent" 
+		android:orientation="vertical">
+		<ListView
+			android:id="@+id/list_view" 
+			android:layout_width="fill_parent" 
+			android:layout_height="0dip"
+			android:layout_weight="1"
+			android:divider="@null"/>
+		<LinearLayout
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:baselineAligned="false"
+			android:addStatesFromChildren="true"
+			android:descendantFocusability="afterDescendants"
+			android:layout_alignParentBottom="true"
+			android:layout_weight="0">
+			<ImageButton
+				android:id="@+id/button_select_stamp"
+				android:src="@drawable/select_stamp"
+				android:contentDescription="@string/image_blank"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_gravity="bottom"
+				android:gravity="bottom"/>
+			<EditText
+				android:id="@+id/edit_message"
+				android:layout_width="0dip"
+				android:layout_height="wrap_content"
+				android:layout_weight="1"
+				android:paddingLeft="5dp"
+				android:paddingRight="5dp"
+				android:freezesText="true"
+				android:inputType="textMultiLine" />
+			<ImageButton
+				android:id="@+id/button_send"
+				android:src="@drawable/send"
+				android:contentDescription="@string/image_blank"
+				android:layout_height="wrap_content"
+				android:layout_width="wrap_content"
+				android:layout_gravity="bottom"
+				android:gravity="bottom"
+				android:layout_marginRight="5dp"/>
+		</LinearLayout>
+	</LinearLayout>
+	
+</RelativeLayout>

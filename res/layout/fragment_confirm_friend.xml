@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="wrap_content"
+	android:paddingBottom="10dp"
+	android:paddingLeft="10dp"
+	android:paddingRight="10dp">
+	<ImageView
+		android:id="@+id/image_face"
+		android:contentDescription="@string/image_blank"
+		android:src="@drawable/list_account"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:gravity="left|center_vertical"
+		android:layout_gravity="left|center_vertical"
+		android:paddingTop="6dip"
+		android:paddingLeft="6dip"
+		android:paddingRight="6dip"
+		android:drawablePadding="6dip" />
+	<LinearLayout
+		android:orientation="vertical"
+		android:layout_toRightOf="@id/image_face"
+		android:layout_centerVertical="true"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:paddingLeft="6dip">
+		<TextView
+			android:id="@+id/text_username"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="15sp"/>
+		<TextView
+			android:id="@+id/text_email"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textSize="15sp"/>
+	</LinearLayout>
+</RelativeLayout>

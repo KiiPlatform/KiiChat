@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<ImageView
+		android:src="@drawable/logo"
+		android:contentDescription="@string/image_blank"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="25dp"
+		android:gravity="center_horizontal"
+		android:layout_gravity="center_horizontal"/>
+
+	<Button
+		android:id="@+id/button_facebook"
+		android:text="@string/button_facebook"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dp"
+		android:layout_marginLeft="20dp"
+		android:layout_marginRight="20dp"/>
+	
+	<Button
+		android:id="@+id/button_signin"
+		android:text="@string/button_email"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="15dp"
+		android:layout_marginRight="20dp"
+		android:layout_marginLeft="20dp"/>
+	
+	<CheckBox android:id="@+id/check_remember"
+		android:text="@string/check_remember"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="5dp"
+		android:layout_marginRight="20dp"
+		android:layout_marginLeft="20dp"/>
+	
+	<TextView
+		android:id="@+id/text_new_account"
+		android:text="@string/text_new_account"
+		android:textSize="16sp"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="25dp"
+		android:layout_marginRight="25dp"
+		android:gravity="right"
+		android:layout_gravity="right"/>
+
+</LinearLayout>

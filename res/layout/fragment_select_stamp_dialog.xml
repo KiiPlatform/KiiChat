@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:gravity="top"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
+		<ImageButton
+			android:id="@+id/button_add_stamp"
+			android:src="@drawable/add_stamp"
+			android:contentDescription="@string/image_blank"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_marginTop="6dip"
+			android:layout_marginLeft="6dip"
+			android:gravity="left|center"/>
+		<TextView
+			android:text="@string/label_choose_stamp"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="20dip"
+			android:layout_marginRight="20dip"
+			android:gravity="center_vertical"
+			android:layout_gravity="center_vertical"
+			android:layout_weight="1"
+			android:textSize="20sp"/>
+		<ImageButton
+			android:id="@+id/button_sort_stamp"
+			android:src="@drawable/sort_stamp"
+			android:contentDescription="@string/image_blank"
+			android:layout_height="wrap_content"
+			android:layout_width="wrap_content"
+			android:layout_marginTop="6dip"
+			android:layout_marginRight="6dip"
+			android:gravity="right|center"/>
+	</LinearLayout>
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="2dip"
+		android:layout_marginTop="6dip"
+		android:layout_marginBottom="6dip"
+		android:layout_marginLeft="6dip"
+		android:layout_marginRight="6dip"
+		android:background="@color/common_action_bar_splitter"/>
+	
+	<GridView
+		android:id="@+id/grid_stamp"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:cacheColorHint="#00000000"
+		android:columnWidth="98dp"
+		android:verticalSpacing="2dp"
+		android:horizontalSpacing="2dp"
+		android:listSelector="@android:color/transparent"
+		android:numColumns="auto_fit"
+		android:gravity="center"/>
+	<TextView 
+		android:id="@+id/text_empty" 
+		android:layout_width="fill_parent" 
+		android:layout_height="0dp" 
+		android:visibility="gone"
+		android:layout_marginTop="30dip"
+		android:layout_marginBottom="30dip"
+		android:layout_gravity="center_vertical|center"
+		android:gravity="center_vertical|center"
+		android:text=""
+		android:textSize="15sp"
+		android:layout_weight="1" />
+
+</LinearLayout>
