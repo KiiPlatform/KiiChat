@@ -17,7 +17,7 @@ import com.kii.sample.chat.util.GCMUtils;
 import com.kii.sample.chat.util.Logger;
 
 /**
- * バックグラウンドでユーザーサインアップ・ログイン後の初期化処理を実行します。
+ * Does initialization process of the user on background thread.
  * 
  * @author ryuji.ochi@kii.com
  */
@@ -40,7 +40,6 @@ public abstract class ChatUserInitializeTask extends AsyncTask<Void, Void, Boole
 	@Override
 	protected Boolean doInBackground(Void... params) {
 		if (KiiUser.getCurrentUser().getBoolean(INITIALIZED_USER_KEY, false)) {
-			// 初期化処理が終了している場合、GCMのRegistrationIDを更新する
 			try {
 				installGCMRegistrationID();
 				return true;
@@ -49,7 +48,6 @@ public abstract class ChatUserInitializeTask extends AsyncTask<Void, Void, Boole
 				return false;
 			}
 		} else {
-			// 初期化処理を行う
 			try {
 				initializeChatUser();
 				return true;
@@ -66,30 +64,27 @@ public abstract class ChatUserInitializeTask extends AsyncTask<Void, Void, Boole
 	}
 	
 	private void initializeChatUser() throws Exception {
-		// ユーザーサインアップ後の処理は以下の5つの処理で構成される
-		// 途中で失敗したかどうかを判断するためにユーザーのプロパティに "initialized" を追加している。
-		//
-		// 1.AppScope Bucketへのチャットユーザー登録
-		// 2.Pushのinstall
-		// 3.User Topicの作成
-		// 4.User TopicへのACLの設定
-		// 5.Topicの購読
+		// Initialization process consists of the following five steps.
+		// Sets property 'initialized' to user, if initialization all complete.
+		// 
+		// 1.Registering user profile to app scope bucket.
+		// 2.Installing user Device.
+		// 3.Creating user topic.
+		// 4.Setting ACL to the topic.
+		// 5.Subscribing the topic.
 		KiiUser kiiUser = KiiUser.getCurrentUser();
 		ChatUser user = ChatUser.findByUri(kiiUser.toUri());
 		if (user == null) {
 			user = new ChatUser(kiiUser.toUri().toString(), username, email);
 			user.getKiiObject().save();
 		}
-		// GCMの設定
 		installGCMRegistrationID();
-		// サーバからプッシュ通知を受信する為に、自分専用のトピックを作成する
-		// このトピックは他の全てのユーザに書き込み権限を与え
-		// 他のユーザが自分をチャットメンバー追加したことを通知する為に使用する
+		// This topic is used to receive notification that other user starts chat with this user.
 		KiiTopic topic = KiiUser.topic(ApplicationConst.TOPIC_INVITE_NOTIFICATION);
 		try {
 			topic.save();
 		} catch (ConflictException e) {
-			// このExceptionをキャッチした場合は、Topicはすでに作成されている
+			// Topic already exist.
 		}
 		KiiACL acl = topic.acl();
 		acl.putACLEntry(new KiiACLEntry(KiiAnyAuthenticatedUser.create(), TopicAction.SEND_MESSAGE_TO_TOPIC, true));
@@ -98,9 +93,8 @@ public abstract class ChatUserInitializeTask extends AsyncTask<Void, Void, Boole
 		} catch (ACLOperationException e) {
 			Throwable t = e.getCause();
 			if (t instanceof ConflictException){
-				// このExceptionをキャッチした場合は、ACLはすでに作成されている
+				// ACL already exist.
 			} else {
-				// それ以外の場合のExceptionの場合は再度スローする
 				throw e;
 			}
 		}
@@ -108,9 +102,8 @@ public abstract class ChatUserInitializeTask extends AsyncTask<Void, Void, Boole
 		try {
 			subscription.subscribe(topic);
 		} catch (ConflictException e) {
-			// このExceptionをキャッチした場合は、Topicはすでに購読されている
+			// Topic is already subscribed.
 		}
-		// 初期化が完了していることを示すフラグをユーザーのカスタムフィールドに追加し、更新する
 		kiiUser.set(INITIALIZED_USER_KEY, true);
 		kiiUser.update();
 	}

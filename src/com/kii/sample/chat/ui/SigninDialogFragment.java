@@ -27,7 +27,7 @@ import com.kii.sample.chat.ui.util.ToastUtils;
 import com.kii.sample.chat.util.Logger;
 
 /**
- * サインイン画面のフラグメントです。
+ * Fragment of sign in screen.
  * 
  * @author ryuji.ochi@kii.com
  */
@@ -114,7 +114,7 @@ public class SigninDialogFragment extends DialogFragment implements OnClickListe
 	}
 	
 	/**
-	 * バックグラウンドでSignin後の処理を実行します。
+	 * Does post-initialization process of the user on background thread.
 	 */
 	private class PostSigninTask extends ChatUserInitializeTask {
 		
@@ -126,7 +126,7 @@ public class SigninDialogFragment extends DialogFragment implements OnClickListe
 		protected void onPostExecute(Boolean result) {
 			SimpleProgressDialogFragment.hide(getFragmentManager());
 			if (result) {
-				// サインイン処理が正常に行われた場合は、コールバックメソッドで呼び出し元に通知する
+				// Call callback if process is success
 				OnInitializeListener listener = onSignupListener.get();
 				if (listener != null) {
 					listener.onInitializeCompleted();

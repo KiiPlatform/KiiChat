@@ -7,7 +7,7 @@ import android.content.Context;
 import com.kii.sample.chat.model.ChatFriend;
 
 /**
- * {@link ChatFriend}をchat_friendsバケットから取得するローダーです。
+ * A Loader to get {@link ChatFriend} from chat_friends bucket.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

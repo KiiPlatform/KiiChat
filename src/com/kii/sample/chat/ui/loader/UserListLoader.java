@@ -11,7 +11,7 @@ import com.kii.sample.chat.model.ChatUser;
 import com.kii.sample.chat.util.Logger;
 
 /**
- * {@link ChatUser}をchat_usersバケットから取得するローダーです。
+ * A Loader to get {@link ChatUser} from chat_users bucket.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -29,7 +29,7 @@ public class UserListLoader extends AbstractAsyncTaskLoader<List<ChatUser>> {
 		try {
 			List<ChatUser> results = ChatUser.searchByKeyword(keyword);
 			for (ChatUser user : results) {
-				// サインイン中のユーザは検索結果から除外する
+				// Ignore myself.
 				if (!TextUtils.equals(user.getUri(), KiiUser.getCurrentUser().toUri().toString())) {
 					users.add(user);
 				}

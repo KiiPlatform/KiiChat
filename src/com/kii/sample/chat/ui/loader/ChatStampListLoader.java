@@ -7,7 +7,7 @@ import android.content.Context;
 import com.kii.sample.chat.model.ChatStamp;
 
 /**
- * {@link ChatStamp}をchat_stampsバケットから取得するローダーです。
+ * A Loader to get {@link ChatStamp} from chat_stamps bucket.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

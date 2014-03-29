@@ -16,11 +16,10 @@ import com.kii.cloud.storage.query.KiiQuery;
 import com.kii.sample.chat.util.Logger;
 
 /**
- * チャットルームを表します。
- * チャットルームはKiiObjectとして保存されるのではなく、KiiGroupとchat_roomという名前で作成されるバケットで表現されます。
- * ユーザがチャットを開始すると、自分とチャット友達が属するKiiGroupが作成されます。
- * さらにそのグループスコープのバケットとしてchat_roomが作成され、そこにメッセージを保存します。
- * チャットメンバーはこのchat_roomバケットを監視しているため、誰かがchat_roomバケットにメッセージを保存すると、チャットメンバーに通知されます。
+ * Represents the chat room.
+ * Chat room is represented by group and bucket. It's not a KiiObject.
+ * KiiGroup will create when user starts chat.
+ * Then 'chat_room' bucket will create on this group scope.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -33,11 +32,8 @@ public class ChatRoom {
 		return kiiGroup.bucket(BUCKET_NAME);
 	}
 	/**
-	 * ログイン中のユーザが所属するグループのchat_roomバケットを全て購読していることを確認します。
-	 * 購読していないバケットがある場合は、購読します。
-	 * chat_roomバケットの購読処理は通常、他のユーザがチャットを開始したタイミングでPush通知を介して行われますが
-	 * Push通知を受けた時点でユーザがログインしていないと、購読処理が行われないため、ログイン時にこのメソッドを呼ぶ必要があります。
-	 * 毎回、購読状況をサーバに確認するのは非効率なので、実際は購読状況をローカルにキャッシュするのが望ましいです。
+	 * Makes sure that specified user already subscribed all chat_room bucket.
+	 * Subscribes bucket, If user did not subscribe bucket.
 	 * 
 	 * @param kiiUser
 	 */
@@ -46,14 +42,11 @@ public class ChatRoom {
 			@Override
 			protected Boolean doInBackground(Void... params) {
 				try {
-					// ユーザが所属しているグループの一覧を取得
 					List<KiiGroup> groups = kiiUser.memberOfGroups();
 					for (KiiGroup group : groups) {
-						// 全てのグループでchat_roomバケットを購読済みであることを確認
 						KiiBucket chatBucket = ChatRoom.getBucket(group);
 						boolean isSubscribed = kiiUser.pushSubscription().isSubscribed(chatBucket);
 						if (!isSubscribed) {
-							// 購読されていない場合は、購読する
 							kiiUser.pushSubscription().subscribeBucket(chatBucket);
 						}
 					}
@@ -71,8 +64,7 @@ public class ChatRoom {
 		}.execute();
 	}
 	/**
-	 * チャットルームの名前を取得します。
-	 * 名前はチャットメンバーの名前をカンマ区切りで連結した文字列です。
+	 * Gets the name of chat room.
 	 * 
 	 * @param user
 	 * @param chatFriend
@@ -88,9 +80,7 @@ public class ChatRoom {
 		return TextUtils.join(",", members);
 	}
 	/**
-	 * チャットルームを一意に識別するキーを生成します。
-	 * キーはチャットメンバー全員のURIを"_"で連結した文字列です。
-	 * このキーを比較することで、既に存在するチャットかどうかを判定できます。
+	 * Generates a key which identifies the chat room.
 	 * 
 	 * @param kiiGroup
 	 * @return
@@ -126,18 +116,18 @@ public class ChatRoom {
 	}
 	
 	/**
-	 * チャットルーム内の全てのメッセージを取得します。
+	 * Gets all messages in the chat room bucket
 	 * 
-	 * @return　昇順にソートされたメッセージリスト
+	 * @return　Message list that is sorted in ascending order
 	 */
 	public List<ChatMessage> getMessageList() {
 		return this.queryMessageList(ChatMessage.createQuery());
 	}
 	/**
-	 * 指定した日時以降に作成されたチャットルーム内のメッセージを取得します。
+	 * Gets messages in the chat room bucket that is created after the specified date.
 	 * 
 	 * @param modifiedSinceTime
-	 * @return 昇順にソートされたメッセージリスト
+	 * @return Message list that is sorted in ascending order
 	 */
 	public List<ChatMessage> getMessageList(long modifiedSinceTime) {
 		return this.queryMessageList(ChatMessage.createQuery(modifiedSinceTime));

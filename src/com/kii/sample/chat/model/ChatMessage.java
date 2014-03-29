@@ -7,10 +7,8 @@ import com.kii.cloud.storage.query.KiiClause;
 import com.kii.cloud.storage.query.KiiQuery;
 
 /**
- * チャットのメッセージを表します。
- * グループスコープのデータとしてKiiCloudに保存され、チャットに参加しているメンバー（KiiGroupに属しているメンバー）のみが参照することができます。
- * KiiObjectは保存時に_createdというをオブジェクトの作成日時を自動的にJSONフィールドに埋め込みます。
- * この_createdを利用してメッセージの順番を管理します。
+ * Represents the message
+ * This data is saved to KiiCloud as group scope data.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -22,7 +20,7 @@ public class ChatMessage extends KiiObjectWrapper {
 	private static final String PREFIX_STAMP = "$STAMP:";
 	
 	/**
-	 * 指定されたスタンプを表すChatMessageオブジェクトを作成します。
+	 * Creates new chat message from specified stamp.
 	 * 
 	 * @param kiiGroup
 	 * @param stamp
@@ -39,7 +37,7 @@ public class ChatMessage extends KiiObjectWrapper {
 		return createQuery(null);
 	}
 	/**
-	 * ChatMessageを検索するためのKiiQueryを生成します。
+	 * Creates KiiQuery to search messages.
 	 * 
 	 * @param 
 	 * @return
@@ -47,10 +45,8 @@ public class ChatMessage extends KiiObjectWrapper {
 	public static KiiQuery createQuery(Long modifiedSinceTime) {
 		KiiQuery query = null;
 		if (modifiedSinceTime != null) {
-			// 最新のメッセージのみを取得するクエリ
 			query = new KiiQuery(KiiClause.greaterThan(FIELD_CREATED, modifiedSinceTime));
 		} else {
-			// 全てのメッセージを取得するクエリ
 			query = new KiiQuery();
 		}
 		query.sortByAsc(FIELD_CREATED);
@@ -65,7 +61,7 @@ public class ChatMessage extends KiiObjectWrapper {
 		super(message);
 	}
 	/**
-	 * このチャットルームのグループのURIを取得します。
+	 * Gets URI of group of chat room.
 	 */
 	public String getGroupUri() {
 		return getString(FIELD_GROUP_URI);
@@ -74,7 +70,7 @@ public class ChatMessage extends KiiObjectWrapper {
 		set(FIELD_GROUP_URI, uri);
 	}
 	/**
-	 * メッセージの本文を取得します。
+	 * Gets the message as string.
 	 */
 	public String getMessage() {
 		return getString(FIELD_MESSAGE);
@@ -83,7 +79,7 @@ public class ChatMessage extends KiiObjectWrapper {
 		set(FIELD_MESSAGE, message);
 	}
 	/**
-	 * メッセージの送信者のURIを取得します。
+	 * Gets the sender URI as string.
 	 */
 	public String getSenderUri() {
 		return getString(FIELD_SENDER_URI);
@@ -92,7 +88,6 @@ public class ChatMessage extends KiiObjectWrapper {
 		set(FIELD_SENDER_URI, uri);
 	}
 	/**
-	 * このインスタンスがスタンプを表すChatMessageかどうかを返します。
 	 * 
 	 * @return
 	 */
@@ -103,7 +98,6 @@ public class ChatMessage extends KiiObjectWrapper {
 		return false;
 	}
 	/**
-	 * このインスタンスがスタンプの場合、スタンプのKiiObjectのURIを返します。
 	 * 
 	 * @return
 	 */

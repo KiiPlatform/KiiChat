@@ -10,8 +10,7 @@ import com.kii.cloud.storage.KiiUser;
 import com.kii.sample.chat.util.Logger;
 
 /**
- * サインイン中のユーザが所属する{@link KiiGroup}を取得するローダーです。
- * 本アプリケーションでは KiiGroup=ChatRoomとなり、KiiGroupの一覧が現在進行中のチャットの一覧となります。
+ * A Loader to get {@link KiiGroup} which is belonged by logged in user.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

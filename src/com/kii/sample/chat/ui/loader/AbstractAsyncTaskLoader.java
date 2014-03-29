@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
 /**
- * AsyncTaskLoaderの骨格実装です。
+ * Skeleton implementation of AsyncTaskLoader.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */

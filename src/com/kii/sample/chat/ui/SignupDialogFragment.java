@@ -25,7 +25,7 @@ import com.kii.sample.chat.ui.util.ToastUtils;
 import com.kii.sample.chat.util.Logger;
 
 /**
- * サインアップ画面のフラグメントです。
+ * Fragment of sign up screen.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -59,7 +59,6 @@ public class SignupDialogFragment extends DialogFragment implements OnClickListe
 		this.editName = (EditText)view.findViewById(R.id.edit_name);
 		this.editEmail = (EditText)view.findViewById(R.id.edit_email);
 		this.editPassword = (EditText)view.findViewById(R.id.edit_password);
-		// android:hintで指定した文字列のフォントを制御する為にxmlでtextPasswordの指定をしないでコードから設定する
 		this.editPassword.setTransformationMethod(new PasswordTransformationMethod());
 		this.editPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		
@@ -79,7 +78,6 @@ public class SignupDialogFragment extends DialogFragment implements OnClickListe
 		final String username = editName.getText().toString();
 		final String email = editEmail.getText().toString();
 		final String password = editPassword.getText().toString();
-		// 入力チェックを行う
 		if (TextUtils.isEmpty(username)) {
 			ToastUtils.showShort(getActivity(), "Please input username");
 			return;
@@ -92,12 +90,11 @@ public class SignupDialogFragment extends DialogFragment implements OnClickListe
 			ToastUtils.showShort(getActivity(), "Please input password");
 			return;
 		}
-		// バックグラウンドでサインアップ処理を実行する
 		new SignupTask(username, email, password).execute();
 	}
 
 	/**
-	 * バックグラウンドでSignupの処理を実行します。
+	 * Do sign up on background thread.
 	 */
 	private class SignupTask extends ChatUserInitializeTask {
 		
@@ -118,13 +115,11 @@ public class SignupDialogFragment extends DialogFragment implements OnClickListe
 		@Override
 		protected Boolean doInBackground(Void... params) {
 			try {
-				// サインアップ処理
 				KiiUser.Builder builder = KiiUser.builderWithEmail(email);
 				KiiUser kiiUser = builder.build();
 				kiiUser.setDisplayname(username);
 				kiiUser.register(password);
 				Logger.i("registered user uri=" + kiiUser.toUri().toString());
-				// サインアップ後の初期化処理を実行
 				return super.doInBackground(params);
 			} catch (Exception e) {
 				Logger.e("failed to sign up", e);
@@ -135,7 +130,7 @@ public class SignupDialogFragment extends DialogFragment implements OnClickListe
 		protected void onPostExecute(Boolean result) {
 			SimpleProgressDialogFragment.hide(getFragmentManager());
 			if (result) {
-				// サインアップ処理が正常に行われた場合は、コールバックメソッドで呼び出し元に通知する
+				// Call callback if process is success
 				OnInitializeListener listener = onSignupListener.get();
 				if (listener != null) {
 					listener.onInitializeCompleted();

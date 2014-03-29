@@ -26,7 +26,7 @@ import com.kii.sample.chat.ui.util.ToastUtils;
 import com.kii.sample.chat.util.Logger;
 
 /**
- * サインイン画面のアクティビティです。
+ * Activity of sign in screen.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
