@@ -20,8 +20,6 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- * ユーザを友達に追加する際に表示される確認用のダイアログフラグメントです。
- * 
  * @author noriyoshi.fukuzaki@kii.com
  */
 public class ConfirmAddFriendDialogFragment extends DialogFragment {

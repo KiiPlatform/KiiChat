@@ -16,8 +16,6 @@ import android.view.View;
 import android.widget.TextView;
 
 /**
- * チャット開始時に表示する確認用のダイアログフラグメントです。
- * 
  * @author noriyoshi.fukuzaki@kii.com
  */
 public class ConfirmStartChatDialogFragment extends DialogFragment {

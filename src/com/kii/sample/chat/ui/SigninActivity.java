@@ -50,7 +50,6 @@ public class SigninActivity extends FragmentActivity implements OnInitializeList
 		this.btnFbSignin.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// Facebookの認証画面を表示する
 				KiiFacebookConnect connect = (KiiFacebookConnect) Kii.socialConnect(SocialNetwork.FACEBOOK);
 				connect.initialize(ApplicationConst.FACEBOOK_APP_ID, null, null);
 				Bundle options = new Bundle();
@@ -60,11 +59,9 @@ public class SigninActivity extends FragmentActivity implements OnInitializeList
 					public void onLoginCompleted(SocialNetwork network, KiiUser user, Exception exception) {
 						if (exception == null) {
 							if (checkRemember.isChecked()) {
-								// ログイン状態を保持する場合は、SharedPreferencesにAccessTokenを保存する
 								Logger.i(user.getAccessToken());
 								PreferencesManager.setStoredAccessToken(user.getAccessToken());
 							}
-							// ログイン後処理を行う
 							new PostSigninTask(user.getDisplayname(), user.getEmail()).execute();
 						} else {
 							Logger.e("failed to sign up", exception);
@@ -77,7 +74,6 @@ public class SigninActivity extends FragmentActivity implements OnInitializeList
 		this.btnSignin.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// サインイン画面を表示する
 				SigninDialogFragment signinFragment = SigninDialogFragment.newInstance(SigninActivity.this, checkRemember.isChecked());
 				signinFragment.show(getSupportFragmentManager(), SigninDialogFragment.TAG);
 			}
@@ -85,7 +81,6 @@ public class SigninActivity extends FragmentActivity implements OnInitializeList
 		this.textNewAccount.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// サインアップ画面を表示する
 				SignupDialogFragment signupFragment = SignupDialogFragment.newInstance(SigninActivity.this);
 				signupFragment.show(getSupportFragmentManager(), "signup");
 			}
@@ -107,7 +102,6 @@ public class SigninActivity extends FragmentActivity implements OnInitializeList
 		protected void onPostExecute(Boolean result) {
 			SimpleProgressDialogFragment.hide(getSupportFragmentManager());
 			if (result) {
-				// サインアップ処理が正常に行われた場合はメイン画面に遷移する
 				moveToChatMain();
 			} else {
 				ToastUtils.showShort(SigninActivity.this, "Unable to sign in");

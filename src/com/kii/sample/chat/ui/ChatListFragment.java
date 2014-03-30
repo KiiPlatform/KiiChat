@@ -37,8 +37,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 /**
- * チャットの一覧を表示する画面のフラグメントです。
- * この画面はタブに表示されます。
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -82,7 +80,6 @@ public class ChatListFragment extends ListFragment implements LoaderCallbacks<Li
 				this.getLoaderManager().restartLoader(0, null, this);
 				return true;
 			case R.id.menu_signout:
-				// TODO:ログアウト処理を共通化
 				PreferencesManager.setStoredAccessToken("");
 				KiiUser.logOut();
 				intent = new Intent(getActivity(), MainActivity.class);
@@ -111,7 +108,6 @@ public class ChatListFragment extends ListFragment implements LoaderCallbacks<Li
 	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// チャットが選択された場合、チャット画面に移動する
 		KiiGroup kiiGroup = (KiiGroup)parent.getItemAtPosition(position);
 		Intent intent = new Intent(getActivity(), ChatActivity.class);
 		intent.putExtra(ChatActivity.INTENT_GROUP_URI, kiiGroup.toUri().toString());
@@ -136,23 +132,22 @@ public class ChatListFragment extends ListFragment implements LoaderCallbacks<Li
 			try {
 				String chatRoomName = ChatRoom.getChatRoomName(KiiUser.getCurrentUser(), this.chatFriend);
 				String uniqueKey = ChatRoom.getUniqueKey(KiiUser.getCurrentUser(), this.chatFriend);
-				// 既に同じメンバーのグループが存在するかチェックする
 				for (int i = 0; i < getListView().getCount(); i++) {
 					KiiGroup kiiGroup = (KiiGroup)getListView().getItemAtPosition(i);
 					if (TextUtils.equals(uniqueKey, ChatRoom.getUniqueKey(kiiGroup))) {
 						return kiiGroup;
 					}
 				}
-				// Chat用のグループを作成
+				// Creating a group
 				KiiGroup kiiGroup = Kii.group(chatRoomName);
 				KiiUser target = KiiUser.createByUri(Uri.parse(this.chatFriend.getUri()));
 				target.refresh();
 				kiiGroup.addUser(target);
 				kiiGroup.save();
-				// Chat用バケットを購読してメッセージをプッシュ通知してもらう状態にする
+				// Subscribes a chat bucket in order to receive push notification when message is saved in bucket.
 				KiiBucket chatBucket = ChatRoom.getBucket(kiiGroup);
 				KiiUser.getCurrentUser().pushSubscription().subscribeBucket(chatBucket);
-				// Chat相手にPush通知を飛ばす
+				// Sends notification to the collocutor.
 				KiiTopic topic = target.topicOfThisUser(ApplicationConst.TOPIC_INVITE_NOTIFICATION);
 				Data data = new Data();
 				data.put(ChatRoom.CAHT_GROUP_URI, kiiGroup.toUri().toString());

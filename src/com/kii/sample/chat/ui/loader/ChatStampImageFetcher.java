@@ -18,18 +18,14 @@ import android.support.v4.util.LruCache;
 import android.widget.ImageView;
 
 /**
- * ImageViewに表示するスタンプ画像をバックグラウンドで取得します。
- * StampImageLoaderがImageViewのTagにこのインスタンスを関連づけて無駄なダウロード処理を抑制します。
- * 画像ファイルの読み込みにも多少の時間がかかるため、メモリにもBitmapのキャッシュを保持します。
- * メモリ > ディスク > KiiCloud の順に画像ファイルを探します。
+ * Fetches images from a KiiCloud.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
 public class ChatStampImageFetcher {
 	
 	/**
-	 * 3MBほどメモリキャッシュに利用します。
-	 * もしOutOfMemoryErrorが発生するようでしたら、値を小さくしてください。
+	 * Reduces this value if occurs OutOfMemoryError on your device.
 	 */
 	private static final int MEM_CACHE_SIZE = 1024 * 1024 * 3; 
 	private final Object pauseWorkLock = new Object();
@@ -59,30 +55,26 @@ public class ChatStampImageFetcher {
 	public void fetchStamp(ChatStamp stamp, ImageView imageView) {
 		Bitmap bitmap = cache.get(stamp.getUri());
 		if (bitmap != null) {
-			// メモリにキャッシュされている場合は、BitmapをImageViewに設定して終了する。
+			// When cache is found
 			imageView.setImageDrawable(new BitmapDrawable(this.resources, bitmap));
 			return;
 		} else {
-			// メモリにキャッシュされていない場合は、取得に時間がかかる可能性があるので'読み込み中'のアイコンを表示する
 			imageView.setImageBitmap(this.loadingBitmap);
 		}
 		StampImageLoader loader = (StampImageLoader)imageView.getTag();
 		if (loader != null) {
 			if (!loader.getUri().equals(stamp.getUri())) {
-				// 画面に表示されなくなったImageViewに紐づくタスクをキャンセルする
 				loader.cancel(true);
 			} else {
-				// 既に同一IDのタスクが存在する場合は何もしない
 				return;
 			}
 		}
-		// 画像をロードするタスクを作成してImageViewに関連付けて実行する
 		loader = new StampImageLoader(stamp, imageView);
 		imageView.setTag(loader);
 		ThreadUtils.executeTaskOnExecutor(loader);
 	}
 	/**
-	 * KiiCloudからスタンプ画像本体をダウンロードします。
+	 * Downloads stamp image from KiiCloud.
 	 */
 	private class StampImageLoader extends AsyncTask<Void, Void, Bitmap> {
 		
@@ -95,7 +87,6 @@ public class ChatStampImageFetcher {
 		}
 		@Override
 		protected Bitmap doInBackground(Void... params) {
-			// Pause中はスレッドを停止する
 			synchronized (pauseWorkLock) {
 				while (isPauseWork && !isCancelled()) {
 					try {
@@ -105,14 +96,12 @@ public class ChatStampImageFetcher {
 				}
 			}
 			if (isCancelled()) {
-				// タスクがキャンセルされていたら何もしない
 				Logger.i("loader task is canceled.");
 				return null;
 			}
-			// ディスクまたはKiiCloudから画像を取得する
+			// Retrieves image from disc cache or KiiCloud.
 			Bitmap bitmap = stamp.getImage();
 			if (bitmap != null) {
-				// 画像をメモリキャッシュとディスクキャッシュの両方に書き込む
 				StampCacheUtils.saveCache(stamp, bitmap);
 				cache.put(this.stamp.getUri(), bitmap);
 			}

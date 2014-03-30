@@ -41,7 +41,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * メッセージの送受信を行うチャット画面です。
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -109,7 +108,7 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 		this.btnSend.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// 入力されたメッセージをバックグラウンドでKiiCloudに保存する
+				// Saves inputted message on background thread.
 				btnSend.setEnabled(false);
 				final ChatMessage message = new ChatMessage(kiiGroup);
 				message.setMessage(editMessage.getText().toString());
@@ -119,7 +118,6 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 		});
 	}
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// SelectStampDialogFragmentから起動したギャラリーから制御が戻ったときに呼ばれる
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == REQUEST_GET_IMAGE_FROM_GALLERY && data != null) {
 			new StampUploader(data.getData()).execute();
@@ -143,12 +141,8 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 	}
 	@Override
 	public void onSelectStamp(ChatStamp stamp) {
-		// 選択されたスタンプをメッセージとしてバックグラウンドでKiiCloudに保存する
 		new SendMessageTask(ChatMessage.createStampChatMessage(this.kiiGroup, stamp)).execute();
 	}
-	/**
-	 * ChatMessageをバックグラウンドでKiiCloudに保存します。
-	 */
 	private class SendMessageTask extends AsyncTask<Void, Void, Boolean> {
 		private final ChatMessage message;
 		private SendMessageTask(ChatMessage message) {
@@ -158,7 +152,6 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 		protected Boolean doInBackground(Void... params) {
 			try {
 				this.message.getKiiObject().save();
-				// スタンプの利用状況をイベントデータとして送信する
 				ChatStamp.sendUsageEvent(this.message);
 				return true;
 			} catch (Exception e) {
@@ -180,7 +173,7 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 		ImageView stamp;
 	}
 	/**
-	 * {@link ChatMessage}をリストビューに表示するためのアダプターです。
+	 * A adapter class to show the {@link ChatMessage}.
 	 */
 	private class MessageListAdapter extends AbstractArrayAdapter<ChatMessage> {
 		
@@ -204,19 +197,15 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 			if (convertView == null) {
 				switch (getRowType(chatMessage)) {
 					case ROW_SELF_MESSAGE:
-						// ログイン中のユーザが送信したメッセージの場合
 						convertView = this.inflater.inflate(R.layout.chat_message_me, parent, false);
 						break;
 					case ROW_SELF_STAMP:
-						// ログイン中のユーザが送信したスタンプの場合
 						convertView = this.inflater.inflate(R.layout.chat_stamp_me, parent, false);
 						break;
 					case ROW_FRIEND_MESSAGE:
-						// 他のユーザが送信したメッセージの場合
 						convertView = this.inflater.inflate(R.layout.chat_message_friend, parent, false);
 						break;
 					case ROW_FRIEND_STAMP:
-						// 他のユーザが送信したスタンプの場合
 						convertView = this.inflater.inflate(R.layout.chat_stamp_friend, parent, false);
 						break;
 				}
@@ -233,11 +222,9 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 				holder = (ViewHolder)convertView.getTag();
 			}
 			if (chatMessage.isStamp()) {
-				// スタンプをバックグラウンドで読み込む
 				ChatStamp stamp = new ChatStamp(chatMessage);
 				imageFetcher.fetchStamp(stamp, holder.stamp);
 			} else {
-				// テキストメッセージを表示する
 				String message = chatMessage.getMessage() == null ? "" : chatMessage.getMessage();
 				holder.message.setText(message);
 			}
@@ -245,12 +232,10 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 		}
 		@Override
 		public int getViewTypeCount() {
-			// ListViewに表示する行の種類は「自分のメッセージ、スタンプ」「友達のメッセージ、スタンプ」の4種類あるので4を返す。
 			return 4;
 		}
 		@Override
 		public int getItemViewType(int position) {
-			// 与えられた位置の行が、「自分のメッセージ」か「友達のメッセージ」かを判定する
 			return getRowType(getItem(position));
 		}
 		private int getRowType(ChatMessage chatMessage) {
@@ -288,11 +273,9 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 				if (lastGotTime == null) {
 					messages = chatRoom.getMessageList();
 				} else {
-					// 前にメッセージを取得済みの場合は、最後に取得したメッセージより新しいメッセージのみを取得する
 					messages = chatRoom.getMessageList(lastGotTime);
 				}
 				if (messages.size() > 0) {
-					// messagesは_createdで昇順にソート済みなので、リストの最後の要素が最新のメッセージとなる
 					lastGotTime = messages.get(messages.size() - 1).getKiiObject().getCreatedTime();
 				}
 				return messages;
@@ -314,7 +297,6 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 			} else {
 				vibrator.vibrate(500);
 			}
-			// ListViewを最新のメッセージの位置までスクロールする
 			listView.setSelection(listView.getCount());
 		}
 	}
@@ -330,8 +312,6 @@ public class ChatActivity extends FragmentActivity implements OnSelectStampListe
 		@Override
 		protected ChatStamp doInBackground(Void... params) {
 			try {
-				// 選択された画像ファイルを必要であれば縮小して、キャッシュディレクトリにコピーする。
-				// この段階では、KiiObjectのURIが決まっていないのでファイル名はキャッシュとしては無効で、キャッシュとしては利用されない。
 				File imageFile = StampCacheUtils.copyToCache(this.imageUri, 128);
 				ChatStamp stamp = new ChatStamp(imageFile);
 				stamp.save();

@@ -24,8 +24,7 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 /**
- * チャットアプリのメイン画面です。
- * ユーザ検索、チャット一覧の２画面で構成されます。
+ * Main screen of chat application.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -62,7 +61,6 @@ public class ChatMainActivity extends FragmentActivity implements OnTabChangeLis
 	}
 	@Override
 	public void onBackPressed() {
-		// 戻るボタンでサインイン画面に戻らないでアプリを終了する
 		moveTaskToBack(true);
 	}
 	private void setupTabs() {
@@ -80,7 +78,7 @@ public class ChatMainActivity extends FragmentActivity implements OnTabChangeLis
 		}
 		this.tabHost.getTabWidget().setStripEnabled(true);
 		this.tabHost.setOnTabChangedListener(this);
-		// 初期表示
+		
 		TabInfo newTab = this.tabInfoMap.get(Tab.USER.name());
 		this.currentTabInfo = newTab;
 		newTab.fragment = FriendListFragment.newInstance();

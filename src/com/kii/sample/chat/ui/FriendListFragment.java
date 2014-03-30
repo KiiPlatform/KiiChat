@@ -38,8 +38,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 /**
- * 友達一覧を表示する画面のフラグメントです。
- * この画面はタブに表示されます。
+ * This fragment will be shown on the Tab.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -84,7 +83,6 @@ public class FriendListFragment extends ListFragment implements LoaderCallbacks<
 				this.getLoaderManager().restartLoader(0, null, this);
 				return true;
 			case R.id.menu_signout:
-				// TODO:ログアウト処理を共通化
 				PreferencesManager.setStoredAccessToken("");
 				KiiUser.logOut();
 				intent = new Intent(getActivity(), MainActivity.class);
@@ -101,7 +99,6 @@ public class FriendListFragment extends ListFragment implements LoaderCallbacks<
 		switch (requestCode) {
 			case REQUEST_CODE_ADD_FRIEND:
 				if (resultCode == Activity.RESULT_OK) {
-					// 友達リストを再読み込み
 					this.getLoaderManager().restartLoader(0, null, this);
 				}
 				break;
@@ -149,22 +146,21 @@ public class FriendListFragment extends ListFragment implements LoaderCallbacks<
 				String chatRoomName = ChatRoom.getChatRoomName(KiiUser.getCurrentUser(), this.chatFriend);
 				String uniqueKey = ChatRoom.getUniqueKey(KiiUser.getCurrentUser(), this.chatFriend);
 				List<KiiGroup> existingGroup = KiiUser.getCurrentUser().memberOfGroups();
-				// 既に同じメンバーのグループが存在するかチェックする
 				for (KiiGroup kiiGroup : existingGroup) {
 					if (TextUtils.equals(uniqueKey, ChatRoom.getUniqueKey(kiiGroup))) {
 						return kiiGroup;
 					}
 				}
-				// Chat用のグループを作成
+				// Creating a group
 				KiiGroup kiiGroup = Kii.group(chatRoomName);
 				KiiUser target = KiiUser.createByUri(Uri.parse(this.chatFriend.getUri()));
 				target.refresh();
 				kiiGroup.addUser(target);
 				kiiGroup.save();
-				// Chat用バケットを購読してメッセージをプッシュ通知してもらう状態にする
+				// Subscribes a chat bucket in order to receive push notification when message is saved in bucket.
 				KiiBucket chatBucket = ChatRoom.getBucket(kiiGroup);
 				KiiUser.getCurrentUser().pushSubscription().subscribeBucket(chatBucket);
-				// Chat相手にPush通知を飛ばす
+				// Sends notification to the collocutor.
 				KiiTopic topic = target.topicOfThisUser(ApplicationConst.TOPIC_INVITE_NOTIFICATION);
 				Data data = new Data();
 				data.put(ChatRoom.CAHT_GROUP_URI, kiiGroup.toUri().toString());

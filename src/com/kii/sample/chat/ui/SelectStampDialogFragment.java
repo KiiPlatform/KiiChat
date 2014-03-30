@@ -36,7 +36,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * スタンプを選択するためのダイアログフラグメントです。
+ * Prompts the user to select a stamp.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -103,11 +103,6 @@ public class SelectStampDialogFragment extends DialogFragment implements LoaderC
 				Intent intent = new Intent();
 				intent.setType("image/*");
 				intent.setAction(Intent.ACTION_GET_CONTENT);
-				/**
-				 * @see ChatActivity#onActivityResult(int, int, Intent)
-				 * DialogFragmentからstartActivityForResultを呼んでも結果をonActivityResultで受け取ることができないので
-				 * 親ActivityのstartActivityForResultを呼んで、親ActivityのonActivityResultで結果を受け取る
-				 */
 				getActivity().startActivityForResult(intent, ChatActivity.REQUEST_GET_IMAGE_FROM_GALLERY);
 				dismiss();
 			}
@@ -127,7 +122,6 @@ public class SelectStampDialogFragment extends DialogFragment implements LoaderC
 				popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 					public boolean onMenuItemClick(final MenuItem item) {
 						selectedPopupMenuItem = item.getItemId();
-						// 選択された方法でGridViewをソートする。
 						new AsyncTask<Void, Void, Comparator<ChatStamp>>() {
 							@Override
 							protected void onPreExecute() {
@@ -137,10 +131,8 @@ public class SelectStampDialogFragment extends DialogFragment implements LoaderC
 							@Override
 							protected Comparator<ChatStamp> doInBackground(Void... params) {
 								if (item.getItemId() == R.id.menu_sort_by_popularity) {
-									// 人気順にソート
 									return ChatStamp.getPopularityComparator();
 								}
-								// 新着順にソート
 								return ChatStamp.getNewlyComparator();
 							}
 							@Override
@@ -188,7 +180,6 @@ public class SelectStampDialogFragment extends DialogFragment implements LoaderC
 	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// 選択されたスタンプをリスナー経由で通知する
 		ChatStamp stamp = (ChatStamp)parent.getItemAtPosition(position);
 		OnSelectStampListener listener = onSelectStampListener.get();
 		if (listener != null && stamp != null) {
@@ -201,7 +192,7 @@ public class SelectStampDialogFragment extends DialogFragment implements LoaderC
 		ImageView stampImage;
 	}
 	/**
-	 * {@link ChatStamp}をグリッドビューに表示するためのアダプターです。
+	 * A adapter class to show the {@link ChatStamp}.
 	 */
 	private class ChatStampListAdpter extends AbstractArrayAdapter<ChatStamp> {
 		

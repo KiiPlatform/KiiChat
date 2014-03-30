@@ -31,8 +31,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 /**
- * 友達追加画面のアクティビティです。
- * Support library v7に含まれるSearchViewを使ってユーザの検索を実装しています。
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -128,7 +126,6 @@ public class AddFriendActivity extends ActionBarActivity implements LoaderCallba
 		protected Boolean doInBackground(Void... params) {
 			try {
 				ChatFriend friend = new ChatFriend(this.chatUser);
-				// 友達を保存
 				friend.getKiiObject().save();
 				return true;
 			} catch (Exception e) {

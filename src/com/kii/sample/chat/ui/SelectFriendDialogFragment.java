@@ -24,8 +24,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 /**
- * 友達を選択するためのダイアログフラグメントです。
- * チャットを開始する際に、相手を選択する為に使用されます。
+ * Prompts the user to select a friend.
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
@@ -92,7 +91,6 @@ public class SelectFriendDialogFragment extends DialogFragment implements Loader
 	}
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		// 選択されたチャット友達をリスナー経由で通知する
 		ChatFriend friend = (ChatFriend)parent.getItemAtPosition(position);
 		OnSelectFriendListener listener = this.onSelectFriendListener.get();
 		if (listener != null) {

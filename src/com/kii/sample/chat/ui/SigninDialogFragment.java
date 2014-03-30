@@ -68,7 +68,6 @@ public class SigninDialogFragment extends DialogFragment implements OnClickListe
 		
 		this.editEmail = (EditText) view.findViewById(R.id.edit_email);
 		this.editPassword = (EditText) view.findViewById(R.id.edit_password);
-		// android:hintで指定した文字列のフォントを制御する為にxmlでtextPasswordの指定をしないでコードから設定する
 		this.editPassword.setTransformationMethod(new PasswordTransformationMethod());
 		this.editPassword.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		
@@ -97,14 +96,12 @@ public class SigninDialogFragment extends DialogFragment implements OnClickListe
 			@Override
 			public void onLoginCompleted(int token, KiiUser user, Exception e) {
 				if (e != null) {
-					// サインイン失敗時はToastを表示してサインイン画面に留まる
 					Logger.e("Unable to login.", e);
 					ToastUtils.showShort(getActivity(), "Unable to login");
 					SimpleProgressDialogFragment.hide(getFragmentManager());
 					return;
 				}
 				if (checkRemember) {
-					// ログイン状態を保持する場合は、SharedPreferencesにAccessTokenを保存する
 					Logger.i(user.getAccessToken());
 					PreferencesManager.setStoredAccessToken(user.getAccessToken());
 				}
