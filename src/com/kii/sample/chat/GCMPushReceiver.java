@@ -82,8 +82,10 @@ public class GCMPushReceiver extends BroadcastReceiver {
 										if (isForeground(context)) {
 											sendBroadcast(context, ApplicationConst.ACTION_MESSAGE_RECEIVED, chatMessage.getKiiObject().toJSON().toString());
 										} else if (!sender.equals(KiiUser.getCurrentUser())) {
-											// Show message in the notification area if notification KiiChat is on background and received message is from other user.
+											// Show message in the notification area if KiiChat is on background and received message is from other user.
 											showNotificationArea(chatMessage, kiiGroup);
+											// Show message by toast.
+											// Must call Toast.show() on the main thread.
 											handler.post(new Runnable() {
 												@Override
 												public void run() {
