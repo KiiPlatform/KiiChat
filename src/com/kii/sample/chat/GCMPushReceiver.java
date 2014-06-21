@@ -14,13 +14,23 @@ import com.kii.cloud.storage.ReceivedMessage;
 import com.kii.cloud.storage.exception.GroupOperationException;
 import com.kii.sample.chat.model.ChatMessage;
 import com.kii.sample.chat.model.ChatRoom;
+import com.kii.sample.chat.ui.ChatActivity;
 import com.kii.sample.chat.util.Logger;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
+import android.view.Gravity;
+import android.widget.Toast;
 
 /**
  * GCMPushReceiver listens for incoming GCM messages.
@@ -28,8 +38,16 @@ import android.os.Bundle;
  * @author noriyoshi.fukuzaki@kii.com
  */
 public class GCMPushReceiver extends BroadcastReceiver {
+	
+	private NotificationManager notificationManager;
+	
+	public GCMPushReceiver() {
+		this.notificationManager = (NotificationManager)KiiChatApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+	}
+	
 	@Override
 	public void onReceive(final Context context, Intent intent) {
+		final Handler handler = new Handler(context.getMainLooper());
 		Logger.i("received push message");
 		if (KiiUser.getCurrentUser() == null) {
 			// Do nothing if user isn't logged in.
@@ -54,13 +72,27 @@ public class GCMPushReceiver extends BroadcastReceiver {
 							@Override
 							public void run() {
 								try {
-									KiiObject obj = ((PushToAppMessage)message).getKiiObject();
+									final KiiUser sender = ((PushToAppMessage)message).getSender();
+									final KiiObject obj = ((PushToAppMessage)message).getKiiObject();
 									obj.refresh();
-									ChatMessage chatMessage = new ChatMessage(obj);
-									KiiGroup kiiGroup = KiiGroup.createByUri(Uri.parse(chatMessage.getGroupUri()));
+									final ChatMessage chatMessage = new ChatMessage(obj);
+									final KiiGroup kiiGroup = KiiGroup.createByUri(Uri.parse(chatMessage.getGroupUri()));
 									// Ignores message if it's not addressed to logged in user.
 									if (isMember(kiiGroup)) {
-										sendBroadcast(context, ApplicationConst.ACTION_MESSAGE_RECEIVED, chatMessage.getKiiObject().toJSON().toString());
+										if (isForeground(context)) {
+											sendBroadcast(context, ApplicationConst.ACTION_MESSAGE_RECEIVED, chatMessage.getKiiObject().toJSON().toString());
+										} else if (!sender.equals(KiiUser.getCurrentUser())) {
+											// Show message in the notification area if notification KiiChat is on background and received message is from other user.
+											showNotificationArea(chatMessage, kiiGroup);
+											handler.post(new Runnable() {
+												@Override
+												public void run() {
+													Toast toast = Toast.makeText(context, chatMessage.getMessage(), Toast.LENGTH_LONG);
+													toast.setGravity(Gravity.CENTER, 0, 0);
+													toast.show();
+												}
+											});
+										}
 									}
 								} catch (Exception e) {
 									Logger.e("Unable to subscribe group bucket", e);
@@ -127,5 +159,44 @@ public class GCMPushReceiver extends BroadcastReceiver {
 		Intent intent = new Intent(action);
 		intent.putExtra(ApplicationConst.EXTRA_MESSAGE, message);
 		context.sendBroadcast(intent);
+	}
+	/**
+	 * Shows a received message in the notification area.
+	 * 
+	 * @param chatMessage
+	 * @param kiiGroup
+	 */
+	private void showNotificationArea(ChatMessage chatMessage, KiiGroup kiiGroup) {
+		if (this.notificationManager != null) {
+			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(KiiChatApplication.getContext())
+			.setSmallIcon(R.drawable.launcher)
+			.setContentTitle("New message received")
+			.setContentText(chatMessage.getMessage());
+			Intent resultIntent = new Intent(KiiChatApplication.getContext(), ChatActivity.class);
+			resultIntent.putExtra(ChatActivity.INTENT_GROUP_URI, kiiGroup.toUri().toString());
+			
+			TaskStackBuilder stackBuilder = TaskStackBuilder.create(KiiChatApplication.getContext());
+			stackBuilder.addParentStack(ChatActivity.class);
+			stackBuilder.addNextIntent(resultIntent);
+			PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+			notificationBuilder.setContentIntent(resultPendingIntent);
+			this.notificationManager.notify(0, notificationBuilder.build());
+		}
+	}
+	/**
+	 * Checks if the KiiChat is on foreground.
+	 * 
+	 * @param context
+	 * @return
+	 */
+	private boolean isForeground(Context context){
+		ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningAppProcessInfo> processInfoList = am.getRunningAppProcesses();
+		for(RunningAppProcessInfo info : processInfoList){
+			if(info.processName.equals(context.getPackageName()) && info.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND){
+				return true;
+			}
+		}
+		return false;
 	}
 }
