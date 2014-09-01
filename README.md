@@ -4,8 +4,8 @@ This demo project helps you learn how to use the KiiCloud.
 
 ##Requirements:
 
-- android-support-v4.jar (rev. 19.1)
-- android-support-v7-appcompat.jar (rev. 19.1)
+- android-support-v4.jar (rev. 20)
+- android-support-v7-appcompat.jar (rev. 20)
 - google-play-services.jar (for froyo rev. 16)
 
 
