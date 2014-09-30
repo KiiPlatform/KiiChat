@@ -6,14 +6,14 @@ This demo project helps you learn how to use the KiiCloud.
 
 - android-support-v4.jar (rev. 20)
 - android-support-v7-appcompat.jar (rev. 20)
-- google-play-services.jar (for froyo rev. 16)
+- google-play-services.jar
 
 
 ##How to setup a project:
 You need to import following project to your workspace if you use Eclipse.  
 
     {SDK-DIR}/extras/android/support/v7/appcompat
-    {SDK-DIR}/extras/google/google_play_services_froyo/libproject/google-play-services_lib
+    {SDK-DIR}/extras/google/google_play_services/libproject/google-play-services_lib
 
 KiiChat uses GCM(Google Cloud Messaging) in order to send push notification and GCM needs google account.  
 So you need to set up the google account on your emulator.  
