@@ -8,7 +8,7 @@ import com.kii.sample.chat.ui.util.SimpleProgressDialogFragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 
 /**
@@ -17,7 +17,7 @@ import android.text.TextUtils;
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

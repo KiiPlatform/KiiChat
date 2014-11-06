@@ -12,9 +12,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TabHost;
@@ -28,7 +28,7 @@ import android.widget.TextView;
  * 
  * @author noriyoshi.fukuzaki@kii.com
  */
-public class ChatMainActivity extends FragmentActivity implements OnTabChangeListener {
+public class ChatMainActivity extends ActionBarActivity implements OnTabChangeListener {
 	
 	public enum Tab {
 		USER,

@@ -3,7 +3,7 @@
 	package="com.kii.sample.chat"
 	android:versionCode="1"
 	android:versionName="1.0" >
-	<uses-sdk android:targetSdkVersion="19" android:minSdkVersion="8" />
+	<uses-sdk android:targetSdkVersion="21" android:minSdkVersion="8" />
 	
 	<!-- This permission is required to vibrate the phone when push message is received. -->
 	<uses-permission android:name="android.permission.VIBRATE"/>
