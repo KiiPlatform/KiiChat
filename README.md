@@ -3,17 +3,22 @@ KiiChat is simple chat application using the [KiiCloud](https://developer.kii.co
 This demo project helps you learn how to use the KiiCloud.
 
 ##Requirements:
-
-- android-support-v4.jar (rev. 20)
-- android-support-v7-appcompat.jar (rev. 20)
-- google-play-services.jar
+- android-support-v4.jar (rev. 21.0.1)
+- android-support-v7-appcompat.jar (rev. 21.0.1)
+- google-play-services.jar (rev. 21)
 
 
 ##How to setup a project:
-You need to import following project to your workspace if you use Eclipse.  
 
-    {SDK-DIR}/extras/android/support/v7/appcompat
-    {SDK-DIR}/extras/google/google_play_services/libproject/google-play-services_lib
+1. You need to import following project to your workspace if you use Eclipse.  
+
+        {SDK-DIR}/extras/android/support/v7/appcompat
+        {SDK-DIR}/extras/google/google_play_services/libproject/google-play-services_lib
+
+1. Go in the project->properties of your appcompat project and google-play project
+1. change target=android-19 to target=android-21
+
+
 
 KiiChat uses GCM(Google Cloud Messaging) in order to send push notification and GCM needs google account.  
 So you need to set up the google account on your emulator.  
