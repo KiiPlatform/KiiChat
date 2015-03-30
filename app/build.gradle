@@ -1,0 +1,28 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion "21.0.2"
+
+    defaultConfig {
+        applicationId "com.kii.sample.chat"
+        minSdkVersion 9
+        targetSdkVersion 21
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:support-v4:21.0.2'
+    compile 'com.android.support:appcompat-v7:21.0.2'
+    compile 'com.google.android.gms:play-services:6.5.87'
+    compile files('libs/KiiAnalyticsSDK_v2.1.6_a73ef4b.jar')
+    compile files('libs/KiiCloudStorageSDK_release_v2.1.29_e24f761.jar')
+    compile files('libs/commons-io-2.4.jar')
+}

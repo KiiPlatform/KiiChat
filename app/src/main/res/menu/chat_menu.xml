@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:kiichat="http://schemas.android.com/apk/res-auto">
-	<item android:id="@+id/menu_add_friend"
-		android:title="@string/menu_add_friend"
-		android:icon="@drawable/menu_add_friend"
+	<item android:id="@+id/menu_new_chat"
+		android:title="@string/menu_new_chat"
+		android:icon="@drawable/menu_new_chat"
 		kiichat:showAsAction="always" />
 	<item android:id="@+id/menu_reload"
 		android:title="@string/menu_reload"
