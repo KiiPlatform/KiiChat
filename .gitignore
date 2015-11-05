@@ -1,4 +1,10 @@
 gen
 bin
 .settings
+
+# Android Studio
 local.properties
+*.iml
+.idea/*
+.gradle/*
+build/*

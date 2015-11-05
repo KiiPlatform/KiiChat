@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:kiichat="http://schemas.android.com/apk/res-auto">
+	<item android:id="@+id/menu_new_chat"
+		android:title="@string/menu_new_chat"
+		android:icon="@drawable/menu_new_chat"
+		kiichat:showAsAction="always" />
+	<item android:id="@+id/menu_reload"
+		android:title="@string/menu_reload"
+		android:icon="@drawable/menu_reload"
+		kiichat:showAsAction="ifRoom" />
+	<item android:id="@+id/menu_signout"
+		android:title="@string/menu_signout"
+		android:icon="@drawable/menu_signout"
+		kiichat:showAsAction="always" />
+</menu>
