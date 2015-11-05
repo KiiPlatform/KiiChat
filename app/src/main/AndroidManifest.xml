@@ -54,6 +54,10 @@
 			android:label="@string/app_name"
 			android:launchMode="singleTask"
 			android:configChanges="orientation|screenSize|keyboardHidden"/>
+		<activity android:name="com.kii.cloud.storage.social.connector.KiiSocialNetworkConnectorLoginActivity"
+				  android:label="KiiChat"
+				  android:launchMode="singleTask"
+				  android:configChanges="orientation|screenSize|keyboardHidden"/>
 		<!-- This settings is required to receive the push message. -->
 		<receiver
 			android:name="com.kii.sample.chat.GCMPushReceiver"

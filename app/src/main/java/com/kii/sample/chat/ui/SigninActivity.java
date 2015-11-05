@@ -1,6 +1,8 @@
 package com.kii.sample.chat.ui;
 
 import com.kii.cloud.storage.KiiUser;
+import com.kii.cloud.storage.social.KiiSocialConnect;
+import com.kii.cloud.storage.social.connector.KiiSocialNetworkConnector;
 import com.kii.sample.chat.R;
 import com.kii.sample.chat.model.ChatRoom;
 import com.kii.sample.chat.ui.task.ChatUserInitializeTask.OnInitializeListener;
@@ -50,12 +52,9 @@ public class SigninActivity extends ActionBarActivity implements OnInitializeLis
 		this.btnFbSignin.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				KiiFacebookConnect connect = (KiiFacebookConnect) Kii.socialConnect(SocialNetwork.FACEBOOK);
-				connect.initialize(ApplicationConst.FACEBOOK_APP_ID, null, null);
-				Bundle options = new Bundle();
-				String[] permission = new String[] { "email" };
-				options.putStringArray(KiiFacebookConnect.FACEBOOK_PERMISSIONS, permission);
-				connect.logIn(SigninActivity.this, options, new KiiSocialCallBack() {
+				KiiSocialNetworkConnector connect = (KiiSocialNetworkConnector) Kii.socialConnect(SocialNetwork.SOCIALNETWORK_CONNECTOR);
+				connect.logIn(SigninActivity.this, KiiSocialNetworkConnector.Provider.FACEBOOK, new KiiSocialCallBack() {
+					@Override
 					public void onLoginCompleted(SocialNetwork network, KiiUser user, Exception exception) {
 						if (exception == null) {
 							if (checkRemember.isChecked()) {
@@ -111,7 +110,9 @@ public class SigninActivity extends ActionBarActivity implements OnInitializeLis
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Kii.socialConnect(SocialNetwork.FACEBOOK).respondAuthOnActivityResult(requestCode, resultCode, data);
+		if (requestCode == KiiSocialNetworkConnector.REQUEST_CODE) {
+			Kii.socialConnect(SocialNetwork.SOCIALNETWORK_CONNECTOR).respondAuthOnActivityResult(requestCode, resultCode, data);
+		}
 	}
 	
 	@Override

@@ -18,11 +18,18 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url  "http://dl.bintray.com/kii/KiiAndroidSDK"
+    }
+}
+
 dependencies {
     compile 'com.android.support:support-v4:21.0.2'
     compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'com.google.android.gms:play-services:6.5.87'
-    compile files('libs/KiiAnalyticsSDK_v2.1.6_a73ef4b.jar')
-    compile files('libs/KiiCloudStorageSDK_release_v2.1.29_e24f761.jar')
+    compile 'com.squareup.okhttp:okhttp:2.3.0'
+    compile 'com.squareup.okhttp:okhttp-apache:2.3.0'
+    compile 'com.kii:cloud-sdk:2.3.0:library@aar'
     compile files('libs/commons-io-2.4.jar')
 }

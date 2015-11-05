@@ -22,9 +22,7 @@ public class KiiChatApplication extends Application {
 		context = this;
 		// Initialize SDK when application is started.
 		Logger.i("■■■ initialize KII SDK ■■■");
-		Kii.initialize(ApplicationConst.APP_ID, ApplicationConst.APP_KEY, Kii.Site.JP);
-		Logger.i("■■■ initialize KII Analytics SDK ■■■");
-		KiiAnalytics.initialize(context, ApplicationConst.APP_ID, ApplicationConst.APP_KEY, KiiAnalytics.Site.JP);
+		Kii.initialize(getContext(), ApplicationConst.APP_ID, ApplicationConst.APP_KEY, Kii.Site.JP);
 	}
 	public static Context getContext(){
 		return context;
