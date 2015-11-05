@@ -1,5 +1,8 @@
 package com.kii.sample.chat;
 
+import com.kii.cloud.analytics.KiiAnalytics;
+import com.kii.cloud.storage.Kii;
+
 /**
  * Define application constant.
  * 
@@ -10,6 +13,7 @@ public final class ApplicationConst {
 	// TODO:Needs to overwrite APP_ID and APP_KEY. Refer to http://documentation.kii.com/en/starts/android/
 	public static final String APP_ID = "f39c2d34";
 	public static final String APP_KEY = "2e98ef0bb78a58da92f9ac0709dc99ed";
+	public static final Kii.Site APP_SITE = Kii.Site.JP;
 	// TODO:Needs to overwrite SENDER_ID. Refer to http://developer.android.com/google/gcm/gcm.html#senderid
 	public static final String SENDER_ID = "1012419078893";
 	// TODO:Needs to overwrite AGGREGATION_RULE_ID. Refer to http://documentation.kii.com/en/guides/android/managing-analytics/flex-analytics/analyze-event-data/
