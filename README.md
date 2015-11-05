@@ -3,31 +3,35 @@ KiiChat is simple chat application using the [KiiCloud](https://developer.kii.co
 This demo project helps you learn how to use the KiiCloud.
 
 ##Requirements:
-- android-support-v4.jar (rev. 21.0.1)
-- android-support-v7-appcompat.jar (rev. 21.0.1)
-- google-play-services.jar (rev. 21)
-
+- Android Studio
 
 ##How to setup a project:
 
-1. You need to import following project to your workspace if you use Eclipse.  
+1. Go to [developer console](https://developer.kii.com) and create account/ app.
+2. Replace APP_ID, APP_KEY, APP_SITE in ApplicationConst.java with yours created in step 1.
 
-        {SDK-DIR}/extras/android/support/v7/appcompat
-        {SDK-DIR}/extras/google/google_play_services/libproject/google-play-services_lib
+### Setup Push Notification
+Please read this [guide][push-guide] and Setup GCM for you app.
+Replace the SENDER_ID in ApplicationConst.java with yours.
 
-1. Go in the project->properties of your appcompat project and google-play project
-1. change target=android-19 to target=android-21
+[push-guide]:http://docs.kii.com/en/guides/android/quickstart/adding-kii-push-notification-to-your-application/adding-push-notification-gcm
 
-
-
-KiiChat uses GCM(Google Cloud Messaging) in order to send push notification and GCM needs google account.  
-So you need to set up the google account on your emulator.  
+In order to test push notification on emulater, please check following steps.
 
 1. Make sure you are using emulator targetted on Google API
 1. Add account on emulator as setting->account
 
-
 <img src="screenshots/05.png">
+
+### Setup Facebook integration
+Please read this [guide][fb-guide] and configure Facebook appID/ appSecret in developer console.
+
+[fb-guide]:http://docs.kii.com/en/guides/android/managing-users/social-network-integration/facebook
+
+### Setup Analytics
+Please read this [guide][analytics-guide] and replace AGGREGATION_RULE_ID in ApplicationConst.java with yours.
+
+[analytics-guide]:http://documentation.kii.com/en/guides/android/managing-analytics/flex-analytics/analyze-event-data
 
 ##Kii Features used:
 
