@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.0.2"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.kii.sample.chat"
-        minSdkVersion 9
+        minSdkVersion 10
         targetSdkVersion 21
     }
 
