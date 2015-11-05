@@ -1,6 +1,5 @@
 package com.kii.sample.chat;
 
-import com.kii.cloud.analytics.KiiAnalytics;
 import com.kii.cloud.storage.Kii;
 
 /**
