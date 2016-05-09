@@ -59,6 +59,16 @@ Please read this [guide][analytics-guide] and replace AGGREGATION_RULE_ID in App
 ##Support:
 If you have any questions, please feel free to ask at [community](http://community.kii.com/).
 
+##Resources:
+APP Icon:  
+[Free 3D Social Icons](https://www.iconfinder.com/icons/54521/about_balloon_baloon_bubble_chat_comment_comments_forum_help_hint_knob_mandarin_mandarine_orange_pin_snap_speech_tack_talk_tangerine_icon) - [By Aha-Soft](http://www.aha-soft.com/)  
+[Creative Commons (Attribution-Share Alike 3.0 Unported)](http://creativecommons.org/licenses/by-sa/3.0/)  
+
+Icons:  
+https://github.com/Templarian/MaterialDesign  
+  
+Chat bubble 9pach:  
+http://www.codeproject.com/Tips/897826/Designing-Android-Chat-Bubble-Chat-UI  
 
 ##Screenshots:
 
@@ -72,5 +82,6 @@ If you have any questions, please feel free to ask at [community](http://communi
     <td><img src="screenshots/04.png"></td>
   </tr>
 </talbe>
+
 
 

@@ -15,7 +15,7 @@
 		android:paddingLeft="10dip"
 		android:paddingTop="5dip"
 		android:paddingBottom="10dip"
-		android:background="@drawable/chat_bubble_me"
+		android:background="@drawable/in_message_bg"
 		android:layout_alignParentRight="true"
 		android:singleLine="false"/>
 </RelativeLayout>
