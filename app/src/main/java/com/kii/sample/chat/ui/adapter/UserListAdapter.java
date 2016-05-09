@@ -39,7 +39,7 @@ public class UserListAdapter extends AbstractArrayAdapter<IUser> {
 		IUser user = this.getItem(position);
 		holder.position = position;
 		holder.text.setText(user.getUsername());
-		holder.icon.setImageResource(R.drawable.list_account);
+		holder.icon.setImageResource(R.drawable.ic_account_grey600_48dp);
 		return convertView;
 	}
 

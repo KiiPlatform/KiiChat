@@ -3,14 +3,14 @@
 	xmlns:kiichat="http://schemas.android.com/apk/res-auto">
 	<item android:id="@+id/menu_add_friend"
 		android:title="@string/menu_add_friend"
-		android:icon="@drawable/menu_add_friend"
+		android:icon="@drawable/ic_account_plus_grey600_24dp"
 		kiichat:showAsAction="always" />
 	<item android:id="@+id/menu_reload"
 		android:title="@string/menu_reload"
-		android:icon="@drawable/menu_reload"
+		android:icon="@drawable/ic_refresh_grey600_24dp"
 		kiichat:showAsAction="ifRoom" />
 	<item android:id="@+id/menu_signout"
 		android:title="@string/menu_signout"
-		android:icon="@drawable/menu_signout"
+		android:icon="@drawable/ic_logout_grey600_24dp"
 		kiichat:showAsAction="always" />
 </menu>
