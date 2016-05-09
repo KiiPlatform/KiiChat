@@ -9,7 +9,7 @@
 	<ImageView
 		android:id="@+id/image_face"
 		android:contentDescription="@string/image_blank"
-		android:src="@drawable/list_account"
+		android:src="@drawable/ic_account_grey600_48dp"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:gravity="left|center_vertical"

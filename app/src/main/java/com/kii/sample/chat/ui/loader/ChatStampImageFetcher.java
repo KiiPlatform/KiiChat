@@ -113,7 +113,7 @@ public class ChatStampImageFetcher {
 				if (bitmap != null) {
 						imageView.setImageDrawable(new BitmapDrawable(resources, bitmap));
 				} else {
-					imageView.setImageResource(R.drawable.error);
+					imageView.setImageResource(R.drawable.ic_close_box_outline_grey600_48dp);
 				}
 			}
 		}

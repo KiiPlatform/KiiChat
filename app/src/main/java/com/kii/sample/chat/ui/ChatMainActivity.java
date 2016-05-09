@@ -66,8 +66,8 @@ public class ChatMainActivity extends ActionBarActivity implements OnTabChangeLi
 	private void setupTabs() {
 		this.tabHost = (TabHost)findViewById(android.R.id.tabhost);
 		this.tabHost.setup();
-		this.tabHost.addTab(newTab(Tab.USER, R.string.tab_text_friends, R.drawable.tab_user));
-		this.tabHost.addTab(newTab(Tab.CHAT, R.string.tab_text_chat, R.drawable.tab_chat));
+		this.tabHost.addTab(newTab(Tab.USER, R.string.tab_text_friends, R.drawable.ic_account_multiple_grey600_36dp));
+		this.tabHost.addTab(newTab(Tab.CHAT, R.string.tab_text_chat, R.drawable.ic_message_outline_grey600_36dp));
 		
 		this.clearTab();
 		if (!this.tabInfoMap.containsKey(Tab.USER.name())) {

@@ -12,7 +12,7 @@
 		android:layout_height="wrap_content">
 		<ImageButton
 			android:id="@+id/button_add_stamp"
-			android:src="@drawable/add_stamp"
+			android:src="@drawable/ic_cloud_upload_white_24dp"
 			android:contentDescription="@string/image_blank"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
 			android:textSize="20sp"/>
 		<ImageButton
 			android:id="@+id/button_sort_stamp"
-			android:src="@drawable/sort_stamp"
+			android:src="@drawable/ic_sort_white_24dp"
 			android:contentDescription="@string/image_blank"
 			android:layout_height="wrap_content"
 			android:layout_width="wrap_content"

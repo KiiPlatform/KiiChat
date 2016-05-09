@@ -39,7 +39,7 @@ public class GroupListAdapter extends AbstractArrayAdapter<KiiGroup> {
 		KiiGroup group = this.getItem(position);
 		holder.position = position;
 		holder.text.setText(group.getGroupName());
-		holder.icon.setImageResource(R.drawable.list_account);
+		holder.icon.setImageResource(R.drawable.ic_account_grey600_48dp);
 		return convertView;
 	}
 
